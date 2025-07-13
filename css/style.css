@@ -1,0 +1,367 @@
+/* =================================================================
+ * TABLE OF CONTENTS
+ * -----------------------------------------------------------------
+ * 1.  VARIABLES & THEME
+ * 2.  GLOBAL RESETS & BASE STYLES
+ * 3.  LAYOUT & HELPERS (Container, Buttons, etc.)
+ * 4.  HEADER & NAVIGATION
+ * 5.  GENERIC PAGE & CONTENT STYLES
+ * 6.  HOMEPAGE SECTIONS (Hero, Stats, About, Courses, CTA)
+ * 7.  NEW HOMEPAGE SECTIONS (Accreditations, Blog, FAQ)
+ * 8.  REUSABLE COMPONENTS (Cards, Forms, etc.)
+ * 9.  AI CHAT WIDGET
+ * 10. FOOTER
+ * 11. ANIMATIONS
+ * 12. RESPONSIVE DESIGN
+ * ================================================================= */
+
+/* =================================================================
+ * 1. VARIABLES & THEME
+ * ================================================================= */
+:root {
+    --color-primary: #0d47a1; /* Deep, professional blue */
+    --color-secondary: #2e7d32; /* Trustworthy, natural green */
+    --color-accent: #ffab40; /* Warm, inviting accent for special buttons */
+    --color-text: #333333;
+    --color-text-light: #666666;
+    --color-background: #ffffff;
+    --color-light-bg: #f7fafc;
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Lato', sans-serif;
+    --container-width: 1200px;
+    --border-radius: 8px;
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+/* =================================================================
+ * 2. GLOBAL RESETS & BASE STYLES
+ * ================================================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--color-text); background-color: var(--color-background); line-height: 1.7; font-size: 16px; }
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; color: var(--color-primary); line-height: 1.3; }
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+h3 { font-size: 1.75rem; }
+a { text-decoration: none; color: var(--color-secondary); transition: color 0.3s ease; }
+a:hover { color: var(--color-primary); }
+img { max-width: 100%; height: auto; display: block; }
+ul { list-style: none; }
+address { font-style: normal; }
+
+/* =================================================================
+ * 3. LAYOUT & HELPERS
+ * ================================================================= */
+.container { max-width: var(--container-width); margin-left: auto; margin-right: auto; padding-left: 20px; padding-right: 20px; }
+.section { padding: 100px 0; }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-header p { max-width: 600px; margin: 0 auto; color: var(--color-text-light); }
+.btn { display: inline-block; padding: 15px 35px; font-family: var(--font-heading); font-weight: 600; font-size: 1rem; border-radius: 50px; text-align: center; transition: all 0.3s ease; border: none; cursor: pointer; }
+.btn-primary { background-color: var(--color-secondary); color: white; }
+.btn-primary:hover { background-color: var(--color-primary); color: white; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.btn-secondary { font-family: var(--font-heading); font-weight: 700; color: var(--color-secondary); }
+.btn-secondary:hover { color: var(--color-primary); text-decoration: underline; }
+.text-center { text-align: center; }
+
+/* REVISED: Added focus-visible for accessibility */
+.btn:focus-visible, .btn-secondary:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+/* =================================================================
+ * 4. HEADER & NAVIGATION
+ * ================================================================= */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px 0;
+    transition: all 0.4s ease;
+    /* NEW: Initial transparency for the header */
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    backdrop-filter: blur(5px); /* Apply a light blur effect */
+    -webkit-backdrop-filter: blur(5px); /* For Safari support */
+}
+.header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly more opaque when scrolled */
+    padding: 15px 0;
+    box-shadow: var(--shadow-light);
+    backdrop-filter: blur(10px); /* More blur when scrolled */
+    -webkit-backdrop-filter: blur(10px);
+}
+.navbar { display: flex; justify-content: space-between; align-items: center; }
+
+/* MODIFIED FOR IMAGE LOGO */
+.logo {
+    /* These font properties are removed as they are for text-based logos */
+    /* font-family: var(--font-heading); */
+    /* font-size: 1.5rem; */
+    /* font-weight: 800; */
+    /* color: var(--color-primary); */
+    display: flex; /* Make it a flex container to align the image */
+    align-items: center; /* Vertically center the logo image */
+    height: 60px; /* Define the height of the logo area in the header */
+    text-decoration: none; /* Ensure no underline on the link */
+}
+
+/* NEW FOR IMAGE LOGO: Styles specifically for the logo image */
+.logo img {
+    height: auto; /* Maintain aspect ratio */
+    width: 120px; /* Adjusted: Smaller width for desktop/laptop */
+    max-width: 100%; /* Ensures it doesn't overflow on smaller screens */
+    display: block; /* Removes any extra space below the image */
+}
+
+.nav-links { display: flex; gap: 35px; }
+.nav-links a { font-family: var(--font-heading); font-weight: 600; color: var(--color-primary); padding-bottom: 5px; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--color-secondary); transition: width 0.3s ease; }
+.nav-links a:hover::after, .nav-links a:focus-visible::after { width: 100%; }
+.nav-links a:focus-visible { outline: none; } /* Remove default outline in favor of the underline */
+
+.menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1001; position: relative; width: 30px; height: 30px; }
+.menu-toggle .material-symbols-outlined { font-size: 2.5rem; color: var(--color-primary); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: opacity 0.3s ease; }
+.menu-toggle .icon-close { opacity: 0; }
+
+/* REVISED: Mobile menu icon switching logic and transparency */
+body.menu-open .menu-toggle .icon-menu { opacity: 0; }
+body.menu-open .menu-toggle .icon-close { opacity: 1; }
+body.menu-open { overflow: hidden; } /* Prevent body scroll when menu is open */
+
+/* =================================================================
+ * 5. GENERIC PAGE & CONTENT STYLES
+ * ================================================================= */
+.page-header { padding: 140px 0 60px; background-color: var(--color-light-bg); text-align: center; }
+.page-header h1 { font-size: 3rem; }
+.page-content { padding: 80px 0; }
+.content-wrapper { max-width: 800px; margin: 0 auto; }
+.content-wrapper h2 { margin-top: 2rem; margin-bottom: 1rem; }
+.content-wrapper p { margin-bottom: 1.5rem; }
+.content-wrapper ul, .content-wrapper ol { margin-left: 20px; margin-bottom: 1.5rem; }
+.content-wrapper li { margin-bottom: 0.75rem; }
+.content-wrapper blockquote { border-left: 4px solid var(--color-secondary); padding-left: 20px; margin: 2rem 0; font-style: italic; color: var(--color-text-light); }
+
+/* =================================================================
+ * 6. HOMEPAGE SECTIONS
+ * ================================================================= */
+.hero { background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://placehold.co/1920x1080/e0f7fa/0d47a1?text=Inspiring+Campus+View') no-repeat center center/cover; height: 100vh; display: flex; align-items: center; text-align: center; }
+.hero-content { max-width: 900px; margin: 0 auto; }
+.hero-content .tagline { font-family: var(--font-heading); color: var(--color-secondary); font-weight: 600; margin-bottom: 1rem; }
+.hero-content h1 { margin-bottom: 1.5rem; text-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.hero-content .subtitle { font-size: 1.25rem; color: var(--color-text-light); max-width: 700px; margin: 0 auto 2.5rem; }
+.stats { background-color: var(--color-light-bg); padding: 60px 0; border-bottom: 1px solid #e0e0e0; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: center; }
+.stat-item { background: white; padding: 30px; border-radius: var(--border-radius); box-shadow: var(--shadow-light); transition: all 0.3s ease; }
+.stat-item:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+.stat-item .icon { font-size: 3rem; color: var(--color-secondary); margin-bottom: 1rem; }
+.stat-item h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.stat-item p { color: var(--color-text-light); }
+.about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; }
+.about-image { width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden; }
+.about-image img { width: 100%; height: 100%; object-fit: cover; }
+.about-content .tagline { color: var(--color-secondary); font-weight: 700; margin-bottom: 1rem; }
+.courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+.cta { background: linear-gradient(rgba(13, 71, 161, 0.9), rgba(13, 71, 161, 0.9)), url('https://placehold.co/1920x500/0d47a1/ffffff?text=Students+in+a+Lab') no-repeat center center/cover; text-align: center; color: white; }
+.cta h2 { color: white; max-width: 800px; margin-left: auto; margin-right: auto; }
+.cta p { max-width: 600px; margin: 0 auto 2.5rem; opacity: 0.9; }
+.cta-btn { background-color: var(--color-accent); color: var(--color-primary); }
+.cta-btn:hover { background-color: white; color: var(--color-primary); }
+
+/* =================================================================
+ * 7. NEW HOMEPAGE SECTIONS
+ * ================================================================= */
+/* --- Accreditations Section --- */
+.accreditation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 900px; margin: 0 auto; }
+.accreditation-item { text-align: center; padding: 30px; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow-light); }
+.accreditation-item .icon { font-size: 3rem; color: var(--color-accent); margin-bottom: 1rem; }
+.accreditation-item h3 { font-size: 1.2rem; color: var(--color-primary); }
+
+/* --- Blog Section --- */
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+.blog-card img { height: 250px; width: 100%; object-fit: cover; }
+
+/* --- FAQ Section --- */
+.faq-container { max-width: 800px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid #e0e0e0; }
+.faq-question { width: 100%; background: none; border: none; text-align: left; padding: 20px 0; font-family: var(--font-heading); font-size: 1.2rem; color: var(--color-primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.faq-question::after { content: '\eadd'; font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; transition: transform 0.3s ease; }
+.faq-item.active .faq-question { color: var(--color-secondary); }
+.faq-item.active .faq-question::after { transform: rotate(180deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
+.faq-item.active .faq-answer { max-height: 200px; /* Adjust as needed for content */ }
+.faq-answer p { padding: 0 0 20px; color: var(--color-text-light); }
+
+/* =================================================================
+ * 8. REUSABLE COMPONENTS
+ * ================================================================= */
+/* --- Cards (for Courses, Blog, etc.) --- */
+.card { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow-light); overflow: hidden; transition: all 0.3s ease; display: flex; flex-direction: column; }
+.card:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+.card-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
+.card h3 { margin-bottom: 1rem; }
+.card .tag { display: inline-block; background: var(--color-primary); color: white; padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; align-self: flex-start; }
+.card .btn { margin-top: auto; }
+.course-list { margin: 1rem 0; flex-grow: 1; }
+.course-list li { display: flex; align-items: center; margin-bottom: 1rem; }
+.course-list .icon { color: var(--color-secondary); margin-right: 10px; font-size: 1.5rem; }
+
+/* =================================================================
+ * 9. AI CHAT WIDGET
+ * ================================================================= */
+#chat-toggle-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background-color: var(--color-primary); color: white; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow); z-index: 1001; transition: all 0.3s ease; }
+#chat-toggle-btn:hover { transform: scale(1.1); }
+#chat-widget { position: fixed; bottom: 100px; right: 30px; width: 350px; max-width: 90vw; height: 500px; max-height: 80vh; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); z-index: 1000; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s ease; }
+#chat-widget.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.chat-header { padding: 15px; background: var(--color-primary); color: white; border-top-left-radius: var(--border-radius); border-top-right-radius: var(--border-radius); display: flex; justify-content: space-between; align-items: center; }
+.chat-header h4 { color: white; margin: 0; }
+#close-chat-btn { background: none; border: none; color: white; cursor: pointer; font-size: 1.5rem; }
+.chat-messages { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.chat-message { padding: 10px 15px; border-radius: 15px; max-width: 80%; }
+.user-message { background: var(--color-primary); color: white; border-bottom-right-radius: 0; align-self: flex-end; }
+.ai-message { background: #f1f1f1; color: var(--color-text); border-bottom-left-radius: 0; align-self: flex-start; }
+.chat-input-form { display: flex; padding: 15px; border-top: 1px solid #e0e0e0; }
+#chat-input { flex-grow: 1; border: 1px solid #ccc; border-radius: 20px; padding: 10px 15px; font-size: 1rem; resize: none; }
+#chat-input:focus { outline: none; border-color: var(--color-primary); }
+#chat-send-btn { background: none; border: none; cursor: pointer; padding: 0 10px; color: var(--color-primary); }
+#chat-send-btn .material-symbols-outlined { font-size: 2rem; }
+
+/* =================================================================
+ * 10. FOOTER
+ * ================================================================= */
+.footer { background-color: var(--color-primary); color: white; padding-top: 80px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 50px; margin-bottom: 60px; }
+.footer-col h4 { color: white; font-size: 1.2rem; margin-bottom: 1.5rem; position: relative; }
+.footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -10px; width: 50px; height: 2px; background-color: var(--color-accent); }
+.footer-col p, .footer-col a { color: rgba(255,255,255,0.8); margin-bottom: 10px; }
+.footer-col a:hover { color: white; }
+.footer-links li { margin-bottom: 10px; }
+.social-links { display: flex; gap: 15px; margin-top: 20px; }
+/* REVISED: Styles for inline SVGs, removing old background-image method */
+.social-links a { display: inline-flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; transition: all 0.3s ease; }
+.social-links a:hover { background-color: var(--color-secondary); transform: translateY(-3px); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.2); padding: 20px 0; text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+.footer-bottom a { font-weight: bold; color: white; }
+
+/* =================================================================
+ * 11. ANIMATIONS
+ * ================================================================= */
+.reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* =================================================================
+ * 12. RESPONSIVE DESIGN
+ * ================================================================= */
+@media (max-width: 992px) {
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 2rem; }
+    .section { padding: 80px 0; }
+    .about-grid {
+        grid-template-columns: 1fr; /* Ensures single column stacking */
+        gap: 30px; /* Adjust gap for mobile */
+    }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+
+    /* For the GNM section's about-grid, to override inline style and force stacking */
+    #gnm .about-grid {
+        grid-template-areas: unset !important; /* Removes the specific grid area definition */
+    }
+    #gnm .about-grid .about-content,
+    #gnm .about-grid .about-image {
+        grid-area: unset !important; /* Removes specific grid-area assignments */
+    }
+}
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        /* NEW: Transparency for mobile menu background */
+        background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+        backdrop-filter: blur(5px); /* Apply a light blur effect */
+        -webkit-backdrop-filter: blur(5px); /* For Safari support */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.5s ease-in-out;
+        gap: 40px;
+    }
+    .nav-links.active { right: 0; }
+    .nav-links a { font-size: 1.5rem; }
+    .menu-toggle { display: block; }
+    .footer-grid { grid-template-columns: 1fr; }
+
+    /* ADJUSTED: Smaller logo width for mobile */
+    .logo img {
+        width: 90px; /* Further reduced width for mobile */
+        height: auto;
+    }
+
+    /* Further refine font sizes for better mobile readability */
+    h1 { font-size: 2rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.6rem; margin-bottom: 1rem; }
+    h3 { font-size: 1.4rem; }
+    body { font-size: 15px; } /* Slightly smaller base text if needed */
+
+    /* Adjust padding for container on smaller screens if text feels cramped */
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Adjust section padding for mobile */
+    .section {
+        padding: 60px 0;
+    }
+    .page-header {
+        padding: 120px 0 40px;
+    }
+
+    /* Responsive adjustments for syllabus page tables (copied for other HTML files) */
+    .syllabus-table thead {
+        display: none; /* Hide table headers on small screens */
+    }
+    .syllabus-table, .syllabus-table tbody, .syllabus-table tr, .syllabus-table td {
+        display: block; /* Make them block-level elements */
+        width: 100%;
+    }
+    .syllabus-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-light); /* Add a subtle shadow for card effect */
+    }
+    .syllabus-table td {
+        text-align: right;
+        padding-left: 50%; /* Make space for pseudo-element label */
+        position: relative;
+        border: none; /* Remove individual cell borders */
+    }
+    .syllabus-table td::before {
+        content: attr(data-label); /* Use data-label for content */
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: var(--color-primary);
+    }
+    .syllabus-table tbody tr:nth-child(even) {
+        background-color: white; /* Reset background for rows when stacked */
+    }
+    /* Responsive adjustments for blog content tables (copied for other HTML files) */
+    .blog-content p { font-size: 1rem; } /* Consistent with other blog pages */
+    .blog-content blockquote { font-size: 1rem; padding-left: 15px; } /* Adjust quote size */
+    .counter-item h3 { font-size: 2.8rem; } /* Smaller counter numbers for blog */
+}
+@media (max-width: 576px) {
+    h1 { font-size: 2.2rem; } /* Re-adjusted based on 768px being the main mobile breakpoint for text */
+    h2 { font-size: 1.8rem; } /* Re-adjusted based on 768px being the main mobile breakpoint for text */
+    .hero { height: auto; padding: 150px 0 100px; }
+    .stats-grid, .accreditation-grid { grid-template-columns: 1fr; }
+    .page-header h1 { font-size: 2.5rem; } /* Re-adjusted based on 768px being the main mobile breakpoint for text */
+}
