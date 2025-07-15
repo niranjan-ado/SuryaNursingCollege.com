@@ -11,15 +11,16 @@
  * -----------------
  * 1. CORE WEBSITE FUNCTIONALITY
  *    - initMobileMenu()
- *    - initStickyHeader()
+ *    - initStickyHeader()      (IMPROVED: Performance via throttling)
  *    - initScrollAnimations()
  *    - initCurrentYear()
- *    - initFaqAccordion()      (Revised for better UX & centralization)
+ *    - initAccordions()        (REVISED: To handle all accordion types)
+ *    - initTabs()
  *
- * 2. ADVANCED & FUTURE-PROOF FEATURES
- *    - initAnimatedCounters()
- *    - initGeminiChat()        (Revised for better UX & centralization)
- *    - initCarousel()          (NEW: Centralized for Facilities page)
+ * 2. ADVANCED & DYNAMIC FEATURES
+ *    - initAnimatedCounters()  (IMPROVED: Smoother animation with rAF)
+ *    - initGeminiChat()
+ *    - initCarousel()          (IMPROVED: Now responsive to window resize)
  *
  * 3. INITIALIZATION
  *    - DOMContentLoaded event listener
@@ -39,41 +40,49 @@ function initMobileMenu() {
     const navLinks = document.getElementById('nav-links');
     const body = document.body;
 
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            body.classList.toggle('menu-open');
-            // Set ARIA attribute for accessibility
-            const isExpanded = navLinks.classList.contains('active');
-            menuToggle.setAttribute('aria-expanded', isExpanded);
-        });
+    if (!menuToggle || !navLinks) return;
 
-        // Use .closest('a') for more robust click detection.
-        // This ensures the menu closes even if the click is on an element inside the link.
-        navLinks.addEventListener('click', (event) => {
-            if (event.target.closest('a')) {
-                navLinks.classList.remove('active');
-                body.classList.remove('menu-open');
-                menuToggle.setAttribute('aria-expanded', 'false');
-            }
-        });
-    }
+    menuToggle.addEventListener('click', () => {
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        navLinks.classList.toggle('active');
+        body.classList.toggle('menu-open');
+        menuToggle.setAttribute('aria-expanded', !isExpanded);
+    });
+
+    navLinks.addEventListener('click', (event) => {
+        if (event.target.closest('a')) {
+            navLinks.classList.remove('active');
+            body.classList.remove('menu-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }
+    });
 }
 
 /**
- * Makes the header sticky and styled on scroll.
+ * Makes the header sticky and styled on scroll, using throttling for performance.
  */
 function initStickyHeader() {
     const header = document.getElementById('header');
-    if (header) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-    }
+    if (!header) return;
+
+    let isThrottled = false;
+    const throttleScroll = () => {
+        if (isThrottled) return;
+        isThrottled = true;
+        
+        setTimeout(() => {
+            window.requestAnimationFrame(() => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                isThrottled = false;
+            });
+        }, 100); // Run this check at most every 100ms
+    };
+
+    window.addEventListener('scroll', throttleScroll);
 }
 
 /**
@@ -81,20 +90,20 @@ function initStickyHeader() {
  */
 function initScrollAnimations() {
     const revealElements = document.querySelectorAll('.reveal');
-    if (revealElements.length > 0) {
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 }); // Adjust threshold if elements reveal too early/late
+    if (revealElements.length === 0) return;
 
-        revealElements.forEach(el => {
-            revealObserver.observe(el);
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
         });
-    }
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => {
+        revealObserver.observe(el);
+    });
 }
 
 /**
@@ -108,104 +117,107 @@ function initCurrentYear() {
 }
 
 /**
- * Handles the FAQ/Accordion functionality.
- * This will work for any element with class .faq-item and a .faq-question button inside.
- * It closes other open items when a new one is opened.
+ * Handles all accordion functionality (like FAQs and syllabus accordions).
+ * Closes other open items within the same group when a new one is opened.
  */
-function initFaqAccordion() {
-    // Select all accordion containers (e.g., .faq-container or .syllabus-accordion)
+function initAccordions() {
+    // UPDATED: Now selects both .faq-container and .syllabus-accordion
     const accordionContainers = document.querySelectorAll('.faq-container, .syllabus-accordion');
 
     accordionContainers.forEach(container => {
         container.addEventListener('click', (e) => {
-            // Check if the clicked element or its parent is an .faq-question button
             const questionButton = e.target.closest('.faq-question');
-            if (questionButton) {
-                const item = questionButton.closest('.faq-item');
-                const wasActive = item.classList.contains('active');
+            if (!questionButton) return;
 
-                // Close all other FAQ items within the same container
-                container.querySelectorAll('.faq-item').forEach(otherItem => {
-                    if (otherItem !== item) { // Only close if it's not the clicked item
-                        otherItem.classList.remove('active');
-                    }
-                });
+            const currentItem = questionButton.closest('.faq-item');
+            const wasActive = currentItem.classList.contains('active');
 
-                // Toggle the clicked item
-                if (!wasActive) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
+            // This logic ensures only one item in a group is open at a time.
+            container.querySelectorAll('.faq-item').forEach(otherItem => {
+                otherItem.classList.remove('active');
+            });
+
+            // If the clicked item was not already active, open it.
+            if (!wasActive) {
+                currentItem.classList.add('active');
             }
         });
     });
+}
 
-    // Handle Tab functionality on pages like bsc-nursing-syllabus.html and anm-syllabus.html
+/**
+ * Handles all tab functionality (like on syllabus pages).
+ */
+function initTabs() {
     const tabsContainers = document.querySelectorAll('.tabs-container');
     tabsContainers.forEach(tabsContainer => {
         const tabButtons = tabsContainer.querySelectorAll('.tab-button');
         const tabContents = tabsContainer.querySelectorAll('.tab-content');
 
-        if (tabButtons.length > 0 && tabContents.length > 0) {
-            tabsContainer.addEventListener('click', (e) => {
-                if (e.target.matches('.tab-button')) {
-                    const tabId = e.target.dataset.tab;
-                    
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
+        if (tabButtons.length === 0 || tabContents.length === 0) return;
 
-                    e.target.classList.add('active');
-                    document.getElementById(tabId).classList.add('active');
-                }
-            });
-        }
+        tabsContainer.addEventListener('click', (e) => {
+            const tabButton = e.target.closest('.tab-button');
+            if (!tabButton) return;
+            
+            const tabId = tabButton.dataset.tab;
+            const targetContent = document.getElementById(tabId);
+            
+            if (!targetContent) return;
+
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            tabButton.classList.add('active');
+            targetContent.classList.add('active');
+        });
     });
 }
 
 
 /**
- * 2. ADVANCED & FUTURE-PROOF FEATURES
- * These functions are ready for when you build out new pages and features.
+ * 2. ADVANCED & DYNAMIC FEATURES
  */
 
 /**
- * Animates numbers from 0 to a target value when they scroll into view.
+ * Animates numbers from 0 to a target value using requestAnimationFrame.
  */
 function initAnimatedCounters() {
     const counters = document.querySelectorAll('.animated-counter');
-    if (counters.length > 0) {
-        const speed = 200; // Lower number is faster
+    if (counters.length === 0) return;
 
-        const counterObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = +counter.getAttribute('data-target'); // Convert to number
-                    
-                    // Handle percentage symbol if present in data-target string
-                    const isPercentage = counter.textContent.includes('%');
+    const animateCounter = (counter, target) => {
+        const duration = 2000; // 2 seconds
+        let startTime = null;
 
-                    const updateCount = () => {
-                        let currentCount = +counter.innerText.replace('%', ''); // Remove % for calculation
-                        const increment = target / speed;
+        const step = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            const currentValue = Math.floor(progress * target);
+            
+            counter.textContent = currentValue;
 
-                        if (currentCount < target) {
-                            counter.innerText = Math.ceil(currentCount + increment) + (isPercentage ? '%' : '');
-                            setTimeout(updateCount, 10);
-                        } else {
-                            counter.innerText = target + (isPercentage ? '%' : ''); // Ensure it ends on the exact target
-                        }
-                    };
-                    
-                    updateCount();
-                    observer.unobserve(counter); // Animate only once
-                }
-            });
-        }, { threshold: 0.5 }); // Trigger when 50% of the element is visible
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                counter.textContent = target; // Ensure it ends on the exact target
+            }
+        };
+        window.requestAnimationFrame(step);
+    };
 
-        counters.forEach(counter => counterObserver.observe(counter));
-    }
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = +counter.getAttribute('data-target');
+                animateCounter(counter, target);
+                observer.unobserve(counter);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
 }
 
 /**
@@ -218,79 +230,55 @@ function initGeminiChat() {
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
     const chatSendBtn = document.getElementById('chat-send-btn');
-    const chatMessages = document.getElementById('chat-messages'); // Get chat messages container
+    const chatMessages = document.getElementById('chat-messages');
 
-    if (chatToggleBtn && chatWidget && chatForm && chatMessages) {
-        chatToggleBtn.addEventListener('click', () => chatWidget.classList.add('visible'));
-        
-        if (closeChatBtn) {
-            closeChatBtn.addEventListener('click', () => chatWidget.classList.remove('visible'));
-        }
+    if (!chatToggleBtn || !chatWidget || !chatForm || !chatMessages) return;
 
-        chatForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const userInput = chatInput.value.trim();
+    chatToggleBtn.addEventListener('click', () => chatWidget.classList.add('visible'));
+    closeChatBtn.addEventListener('click', () => chatWidget.classList.remove('visible'));
 
-            if (userInput) {
-                // Add user message to UI
-                addMessage(userInput, 'user-message');
-                
-                // Clear input and disable form for better UX while waiting for response
-                chatInput.value = '';
-                chatInput.disabled = true;
-                chatSendBtn.disabled = true;
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const userInput = chatInput.value.trim();
+        if (!userInput) return;
 
-                // Simulate AI thinking and get response
-                setTimeout(() => {
-                    const botResponse = getGeminiResponse(userInput);
-                    addMessage(botResponse, 'ai-message');
-                    // Re-enable the form after response
-                    chatInput.disabled = false;
-                    chatSendBtn.disabled = false;
-                    chatInput.focus(); // Focus input for next message
-                }, 1500); // Simulate network delay
-            }
-        });
-    }
+        addMessage(userInput, 'user-message');
+        chatInput.value = '';
+        chatInput.disabled = true;
+        chatSendBtn.disabled = true;
 
-    // Helper function to add messages to the chat UI
+        setTimeout(() => {
+            const botResponse = getGeminiResponse(userInput);
+            addMessage(botResponse, 'ai-message');
+            chatInput.disabled = false;
+            chatSendBtn.disabled = false;
+            chatInput.focus();
+        }, 1200);
+    });
+
     function addMessage(text, type) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', type);
-        messageElement.innerHTML = text; // Use innerHTML to render links
+        messageElement.innerHTML = text;
         chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // This is a SIMULATED Gemini response function.
-    // In a real application, this would make an API call to a backend or a Gemini API.
     function getGeminiResponse(input) {
         const lowerInput = input.toLowerCase();
-
-        if (/admission|apply|process|criteria/.test(lowerInput)) {
-            return "Our admission is based on the J.C.E.C.E.B. entrance test. You can find detailed eligibility for each program on our <a href='courses.html'>Courses page</a>.";
-        } else if (/course|program|anm|gnm|bsc/.test(lowerInput)) {
-            return "We offer three main programs: a 2-year ANM diploma, a 3-year GNM diploma, and a 4-year B.Sc. Nursing degree. You can see details for all of them on our <a href='courses.html'>Courses page</a>.";
-        } else if (/syllabus/.test(lowerInput)) {
-            return "You can find links to the full, detailed syllabus for each program on our <a href='courses.html'>Courses page</a>.";
-        } else if (/hostel|accommodation/.test(lowerInput)) {
-            return "Yes, we have secure hostel facilities for our students on campus, creating a safe and focused learning environment.";
-        } else if (/contact|phone|email|address/.test(lowerInput)) {
-            return "You can reach us at +91-9264197981 or suryanursingeducationalcollege@gmail.com. All our details are on the <a href='contact.html'>Contact page</a>.";
-        } else if (/fee|fees|cost|scholarship|payment/.test(lowerInput)) {
-            // This is the "advanced" question fallback
-            return "For specific and up-to-date information on our fee structure, payment options, and any available scholarships, it is best to contact our admissions office directly. You can find their details on our <a href='contact.html'>Contact page</a>.";
-        } else if (/hello|hi|hey/.test(lowerInput)) {
-            return "Hello! How can I assist you today? You can ask me about our courses, admission process, or syllabus.";
-        } else {
-            // Default fallback for anything else
-            return "That's a great question. For more detailed information, I recommend reaching out to our expert team via our <a href='contact.html'>Contact page</a>. They will be happy to assist you!";
-        }
+        if (/admission|apply|process|criteria/.test(lowerInput)) return "Our admission is based on the J.C.E.C.E.B. entrance test. You can find detailed eligibility for each program on our <a href='courses.html'>Courses page</a>.";
+        if (/course|program|anm|gnm|bsc/.test(lowerInput)) return "We offer three main programs: a 2-year ANM diploma, a 3-year GNM diploma, and a 4-year B.Sc. Nursing degree. You can see details for all of them on our <a href='courses.html'>Courses page</a>.";
+        if (/syllabus/.test(lowerInput)) return "You can find links to the full, detailed syllabus for each program on our <a href='courses.html'>Courses page</a>.";
+        if (/hostel|accommodation/.test(lowerInput)) return "Yes, we have secure hostel facilities for our students on campus, creating a safe and focused learning environment.";
+        if (/contact|phone|email|address/.test(lowerInput)) return "You can reach us at +91-9264197981 or suryanursingeducationalcollege@gmail.com. All our details are on the <a href='contact.html'>Contact page</a>.";
+        if (/fee|fees|cost|scholarship|payment/.test(lowerInput)) return "For specific and up-to-date information on our fee structure, payment options, and any available scholarships, it is best to contact our admissions office directly. You can find their details on our <a href='contact.html'>Contact page</a>.";
+        if (/hello|hi|hey/.test(lowerInput)) return "Hello! How can I assist you today? You can ask me about our courses, admission process, or syllabus.";
+        return "That's a great question. For more detailed information, I recommend reaching out to our expert team via our <a href='contact.html'>Contact page</a>. They will be happy to assist you!";
     }
 }
 
 /**
- * Initializes and manages all carousels on the page.
+ * Initializes and manages all carousels, now with resize handling.
  */
 function initCarousel() {
     const carousels = document.querySelectorAll('[data-carousel-id]');
@@ -302,74 +290,54 @@ function initCarousel() {
         const prevButton = carousel.querySelector('.carousel-button--left');
         const dotsNav = carousel.querySelector('.carousel-nav');
 
-        if (!track || !slides.length || !nextButton || !prevButton || !dotsNav) {
-            console.warn('Carousel elements not found for carousel:', carousel);
-            return; // Skip if essential elements are missing
-        }
+        if (!track || slides.length === 0 || !nextButton || !prevButton || !dotsNav) return;
 
-        let currentSlideIndex = 0; // Keep track of the current slide index
-
-        // Create dots for navigation
-        slides.forEach((slide, index) => {
+        let currentSlideIndex = 0;
+        slides.forEach((_, index) => {
             const dot = document.createElement('button');
             dot.classList.add('carousel-indicator');
             if (index === 0) dot.classList.add('current-slide');
             dotsNav.appendChild(dot);
         });
-
         const dots = Array.from(dotsNav.children);
 
-        // Function to update current slide and dots
-        const updateCarouselDisplay = (targetIndex) => {
+        const moveToSlide = (targetIndex) => {
             const targetSlide = slides[targetIndex];
-            track.style.transform = 'translateX(-' + (targetSlide.offsetLeft) + 'px)';
-
-            // Update slide classes
-            slides.forEach((slide, index) => {
-                if (index === targetIndex) {
-                    slide.classList.add('current-slide');
-                } else {
-                    slide.classList.remove('current-slide');
-                }
-            });
+            track.style.transform = 'translateX(-' + targetSlide.offsetLeft + 'px)';
             
-            // Update dot classes
-            dots.forEach((dot, index) => {
-                if (index === targetIndex) {
-                    dot.classList.add('current-slide');
-                } else {
-                    dot.classList.remove('current-slide');
-                }
-            });
-
-            currentSlideIndex = targetIndex; // Update the index tracker
+            slides.forEach((s, i) => s.classList.toggle('current-slide', i === targetIndex));
+            dots.forEach((d, i) => d.classList.toggle('current-slide', i === targetIndex));
+            
+            currentSlideIndex = targetIndex;
         };
 
-        // When I click left, move slides to the left
         prevButton.addEventListener('click', () => {
-            let targetIndex = currentSlideIndex - 1;
-            if (targetIndex < 0) {
-                targetIndex = slides.length - 1; // Loop to the last slide
-            }
-            updateCarouselDisplay(targetIndex);
+            const targetIndex = (currentSlideIndex === 0) ? slides.length - 1 : currentSlideIndex - 1;
+            moveToSlide(targetIndex);
         });
 
-        // When I click right, move slides to the right
         nextButton.addEventListener('click', () => {
-            let targetIndex = currentSlideIndex + 1;
-            if (targetIndex >= slides.length) {
-                targetIndex = 0; // Loop to the first slide
-            }
-            updateCarouselDisplay(targetIndex);
+            const targetIndex = (currentSlideIndex === slides.length - 1) ? 0 : currentSlideIndex + 1;
+            moveToSlide(targetIndex);
         });
 
-        // When I click the nav indicators, move to that slide
         dotsNav.addEventListener('click', e => {
-            const targetDot = e.target.closest('button.carousel-indicator'); // Ensure click is on an indicator button
-            if (!targetDot) return; // Ignore clicks not on a button
-
+            const targetDot = e.target.closest('button.carousel-indicator');
+            if (!targetDot) return;
             const targetIndex = dots.findIndex(dot => dot === targetDot);
-            updateCarouselDisplay(targetIndex);
+            moveToSlide(targetIndex);
+        });
+
+        // IMPROVEMENT: Add a debounced resize handler to fix alignment issues.
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const currentSlide = slides[currentSlideIndex];
+                track.style.transition = 'none'; // Disable transition for instant snap
+                track.style.transform = 'translateX(-' + currentSlide.offsetLeft + 'px)';
+                setTimeout(() => track.style.transition = '', 50); // Re-enable after snap
+            }, 250);
         });
     });
 }
@@ -377,8 +345,7 @@ function initCarousel() {
 
 /**
  * 3. INITIALIZATION
- * This is the main entry point. It waits for the HTML document to be fully
- * loaded and parsed, then calls all the initialization functions.
+ * Waits for the HTML to be fully loaded, then calls all initialization functions.
  */
 document.addEventListener('DOMContentLoaded', () => {
     // Core functions - run on every page
@@ -386,12 +353,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initStickyHeader();
     initScrollAnimations();
     initCurrentYear();
-    initFaqAccordion(); // Handles both FAQ and Syllabus accordions/tabs
+    initAccordions();
+    initTabs();
 
-    // Advanced functions - will only execute if their target elements exist on the page
+    // Advanced functions - will only execute if their target elements exist
     initAnimatedCounters();
     initGeminiChat();
-    initCarousel(); // Initialize all carousels found
+    initCarousel();
 
     console.log("Surya Nursing College scripts initialized successfully.");
 });
