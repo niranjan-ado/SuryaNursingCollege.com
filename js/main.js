@@ -10,17 +10,17 @@
  * TABLE OF CONTENTS
  * -----------------
  * 1. CORE WEBSITE FUNCTIONALITY
- *    - initMobileMenu()
- *    - initStickyHeader()      (IMPROVED: Performance via throttling)
+ *    - initMobileMenu()        (UPDATED: To handle new dropdown menus)
+ *    - initStickyHeader()      
  *    - initScrollAnimations()
  *    - initCurrentYear()
- *    - initAccordions()        (REVISED: To handle all accordion types)
+ *    - initAccordions()        
  *    - initTabs()
  *
  * 2. ADVANCED & DYNAMIC FEATURES
- *    - initAnimatedCounters()  (IMPROVED: Smoother animation with rAF)
+ *    - initAnimatedCounters()  
  *    - initGeminiChat()
- *    - initCarousel()          (IMPROVED: Now responsive to window resize)
+ *    - initCarousel()          
  *
  * 3. INITIALIZATION
  *    - DOMContentLoaded event listener
@@ -33,7 +33,7 @@
  */
 
 /**
- * Handles the mobile navigation menu toggle.
+ * Handles the mobile navigation menu toggle and dropdown interactions.
  */
 function initMobileMenu() {
     const menuToggle = document.getElementById('menu-toggle');
@@ -42,6 +42,7 @@ function initMobileMenu() {
 
     if (!menuToggle || !navLinks) return;
 
+    // Toggle main mobile menu
     menuToggle.addEventListener('click', () => {
         const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
         navLinks.classList.toggle('active');
@@ -49,12 +50,22 @@ function initMobileMenu() {
         menuToggle.setAttribute('aria-expanded', !isExpanded);
     });
 
+    // Handle clicks inside the navigation
     navLinks.addEventListener('click', (event) => {
-        if (event.target.closest('a')) {
-            navLinks.classList.remove('active');
-            body.classList.remove('menu-open');
-            menuToggle.setAttribute('aria-expanded', 'false');
+        const clickedLink = event.target.closest('a');
+        if (!clickedLink) return;
+
+        // If the user clicks the dropdown arrow icon specifically, prevent navigation 
+        // and let the CSS :focus-within handle showing the submenu, without closing the main menu.
+        if (event.target.classList.contains('material-symbols-outlined') && clickedLink.nextElementSibling?.classList.contains('dropdown-menu')) {
+            event.preventDefault();
+            return; 
         }
+
+        // For all other normal link clicks, close the mobile menu
+        navLinks.classList.remove('active');
+        body.classList.remove('menu-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
     });
 }
 
@@ -121,7 +132,6 @@ function initCurrentYear() {
  * Closes other open items within the same group when a new one is opened.
  */
 function initAccordions() {
-    // UPDATED: Now selects both .faq-container and .syllabus-accordion
     const accordionContainers = document.querySelectorAll('.faq-container, .syllabus-accordion');
 
     accordionContainers.forEach(container => {
@@ -135,11 +145,14 @@ function initAccordions() {
             // This logic ensures only one item in a group is open at a time.
             container.querySelectorAll('.faq-item').forEach(otherItem => {
                 otherItem.classList.remove('active');
+                const btn = otherItem.querySelector('.faq-question');
+                if(btn) btn.setAttribute('aria-expanded', 'false');
             });
 
             // If the clicked item was not already active, open it.
             if (!wasActive) {
                 currentItem.classList.add('active');
+                questionButton.setAttribute('aria-expanded', 'true');
             }
         });
     });
@@ -234,7 +247,11 @@ function initGeminiChat() {
 
     if (!chatToggleBtn || !chatWidget || !chatForm || !chatMessages) return;
 
-    chatToggleBtn.addEventListener('click', () => chatWidget.classList.add('visible'));
+    chatToggleBtn.addEventListener('click', () => {
+        chatWidget.classList.add('visible');
+        chatInput.focus();
+    });
+    
     closeChatBtn.addEventListener('click', () => chatWidget.classList.remove('visible'));
 
     chatForm.addEventListener('submit', (e) => {
@@ -296,6 +313,7 @@ function initCarousel() {
         slides.forEach((_, index) => {
             const dot = document.createElement('button');
             dot.classList.add('carousel-indicator');
+            dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
             if (index === 0) dot.classList.add('current-slide');
             dotsNav.appendChild(dot);
         });
@@ -328,7 +346,7 @@ function initCarousel() {
             moveToSlide(targetIndex);
         });
 
-        // IMPROVEMENT: Add a debounced resize handler to fix alignment issues.
+        // Debounced resize handler to fix alignment issues
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Favicon Links (Standardized) -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.svg">
+    <!-- Favicon Links -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0d47a1">
+    <meta name="msapplication-TileColor" content="#0d47a1">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Google Tag Manager -->
@@ -21,8 +21,12 @@
     })(window,document,'script','dataLayer','GTM-N8F7DD47');</script>
     <!-- End Google Tag Manager -->
 
+    <!-- SEO & Meta Tags -->
     <title>Page Not Found (404) | Surya Nursing Educational College</title>
-    <meta name="description" content="The page you were looking for could not be found. Let us help you get back on track.">
+    <meta name="description" content="The page you were looking for could not be found. Let us help you get back on track to explore our nursing programs and facilities.">
+    <meta name="robots" content="noindex, follow"> <!-- 404 pages should not be indexed -->
+    <meta name="author" content="Surya Nursing Educational College">
+    <link rel="canonical" href="https://www.suryanursingcollege.com/404.html">
 
     <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,33 +36,101 @@
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- MAXIMALIST SCHEMA MARKUP (JSON-LD) -->
+    <script type="application/ld+json">[
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Page Not Found (404) | Surya Nursing Educational College",
+        "description": "The page you were looking for could not be found.",
+        "url": "https://www.suryanursingcollege.com/404.html"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Surya Nursing Educational College",
+        "alternateName": "Surya Nursing College Sahibganj",
+        "url": "https://www.suryanursingcollege.com/",
+        "logo": "https://www.suryanursingcollege.com/assets/images/logo.png"
+      }
+    ]
+    </script>
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N8F7DD47"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Header -->
+    <!-- HEADER & NEW MULTI-LEVEL NAVIGATION -->
     <header class="header" id="header">
         <div class="container navbar">
-            <a href="index.html" class="logo">
-              <img src="assets/images/logo.png" alt="Surya Nursing Educational College Logo">
+            <a href="index.html" class="logo" aria-label="Surya Nursing College Home">
+              <img src="assets/images/logo.png" alt="Surya Nursing Educational College Logo" width="120" height="60">
             </a>
-            <nav>
+            <nav aria-label="Main Navigation">
                 <ul class="nav-links" id="nav-links">
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="courses.html">Courses</a></li>
-                    <li><a href="faculty.html">Faculty</a></li>
-                    <li><a href="facilities.html">Facilities</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="exam-time-table.html">Exam Time Table</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <!-- 1. HOME -->
+                    <li class="dropdown">
+                        <a href="index.html" aria-haspopup="true" aria-expanded="false">Home <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 1.2rem; vertical-align: middle;">expand_more</span></a>
+                        <ul class="dropdown-menu" aria-label="Home submenu">
+                            <li><a href="facilities.html#gallery">Only College | Photos</a></li>
+                            <li><a href="about.html#affiliations">Affiliated</a></li>
+                            <li><a href="about.html#affiliations">INC (Indian Nursing Council)</a></li>
+                        </ul>
+                    </li>
+                    <!-- 2. ABOUT US -->
+                    <li class="dropdown">
+                        <a href="about.html" aria-haspopup="true" aria-expanded="false">About Us <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 1.2rem; vertical-align: middle;">expand_more</span></a>
+                        <ul class="dropdown-menu" aria-label="About Us submenu">
+                            <li><a href="about.html#about-college">About College</a></li>
+                            <li><a href="about.html#mission-vision">Vision-Mission</a></li>
+                            <li><a href="about.html#founder">Chairman Message</a></li>
+                            <li><a href="faculty.html#principal-message">Principal</a></li>
+                            <li><a href="faculty.html">Faculty</a></li>
+                        </ul>
+                    </li>
+                    <!-- 3. COURSES -->
+                    <li class="dropdown">
+                        <a href="courses.html" aria-haspopup="true" aria-expanded="false">Courses <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 1.2rem; vertical-align: middle;">expand_more</span></a>
+                        <ul class="dropdown-menu" aria-label="Courses submenu">
+                            <li><a href="courses.html#anm">ANM (Auxiliary Nurse & Midwife)</a></li>
+                            <li><a href="courses.html#gnm">GNM (General Nursing Midwifery)</a></li>
+                            <li><a href="courses.html#bsc">B.Sc Nursing (Basic)</a></li>
+                        </ul>
+                    </li>
+                    <!-- 4. INFRASTRUCTURE/FACILITIES -->
+                    <li class="dropdown">
+                        <a href="facilities.html" aria-haspopup="true" aria-expanded="false">Infrastructure/Facilities <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 1.2rem; vertical-align: middle;">expand_more</span></a>
+                        <ul class="dropdown-menu" aria-label="Facilities submenu">
+                            <li><a href="facilities.html#classrooms">Classrooms (Smart Class)</a></li>
+                            <li><a href="facilities.html#laboratories">Laboratories</a></li>
+                            <li><a href="facilities.html#library">Library</a></li>
+                            <li><a href="facilities.html#auditorium">Auditorium</a></li>
+                            <li><a href="facilities.html#hostel">Hostel</a></li>
+                            <li><a href="facilities.html#sports">Sports</a></li>
+                            <li><a href="facilities.html#sports">Indoor/Outdoor</a></li>
+                        </ul>
+                    </li>
+                    <!-- 5. ACADEMICS -->
+                    <li class="dropdown">
+                        <a href="#" aria-haspopup="true" aria-expanded="false">Academics <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 1.2rem; vertical-align: middle;">expand_more</span></a>
+                        <ul class="dropdown-menu" aria-label="Academics submenu">
+                            <li><a href="facilities.html#clinical">Clinical Facilities (Surya Super Speciality Hospital) & Other Govt, Private Hospitals</a></li>
+                            <li><a href="#">Extra Curricular Activities</a></li>
+                            <li><a href="#">Seminar/Workshop</a></li>
+                            <li><a href="#">Field Visits</a></li>
+                            <li><a href="#">Antiragging</a></li>
+                            <li><a href="#">Placements</a></li>
+                            <li><a href="about.html#affiliations">Permission & Approval</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
             <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-controls="nav-links" aria-expanded="false">
-                <span class="material-symbols-outlined icon-menu">menu</span>
-                <span class="material-symbols-outlined icon-close">close</span>
+                <span class="material-symbols-outlined icon-menu" aria-hidden="true">menu</span>
+                <span class="material-symbols-outlined icon-close" aria-hidden="true">close</span>
             </button>
         </div>
     </header>
@@ -93,17 +165,17 @@
                 </div>
                 <div class="quick-links-grid">
                     <a href="courses.html" class="quick-link-item reveal">
-                        <span class="material-symbols-outlined icon">school</span>
+                        <span class="material-symbols-outlined icon" aria-hidden="true">school</span>
                         <h3>Our Courses</h3>
                         <p>Explore ANM, GNM, and B.Sc Nursing programs.</p>
                     </a>
                     <a href="admissions.html" class="quick-link-item reveal" style="transition-delay: 0.1s;">
-                        <span class="material-symbols-outlined icon">assignment_turned_in</span>
+                        <span class="material-symbols-outlined icon" aria-hidden="true">assignment_turned_in</span>
                         <h3>Admissions Guide</h3>
                         <p>Learn about the application process and requirements.</p>
                     </a>
                     <a href="contact.html" class="quick-link-item reveal" style="transition-delay: 0.2s;">
-                        <span class="material-symbols-outlined icon">call</span>
+                        <span class="material-symbols-outlined icon" aria-hidden="true">call</span>
                         <h3>Contact Us</h3>
                         <p>Get in touch with our team for any questions.</p>
                     </a>
@@ -120,30 +192,30 @@
                 </div>
                 <div class="blog-grid">
                     <div class="card blog-card reveal">
-                        <img src="assets/images/why-choose-nursing.webp" alt="A compassionate nurse attending to a patient.">
+                        <img src="assets/images/why-choose-nursing.webp" alt="A compassionate nurse attending to a patient." loading="lazy" decoding="async">
                         <div class="card-content">
                             <span class="tag">CAREER GUIDE</span>
                             <h3>Why Choose a Nursing Career? A 2025 Guide</h3>
                             <p>This guide explores the purpose, job security, and global demand that make nursing a truly future-proof profession...</p>
-                            <a href="blog-why-choose-nursing.html" class="btn btn-secondary">Read More</a>
+                            <a href="why-choose-nursing.html" class="btn btn-secondary">Read More</a>
                         </div>
                     </div>
                     <div class="card blog-card reveal" style="transition-delay: 0.1s;">
-                        <img src="assets/images/campus-life.webp" alt="Students studying together on campus.">
+                        <img src="assets/images/campus-life.webp" alt="Students studying together on campus." loading="lazy" decoding="async">
                         <div class="card-content">
                             <span class="tag">CAMPUS LIFE</span>
                             <h3>A Day in the Life of a Surya Nursing Student</h3>
                             <p>Follow our journey through a typical day at our college, from morning lectures and hands-on lab work to evening study sessions...</p>
-                            <a href="blog-a-day-at-surya-nursing.html" class="btn btn-secondary">Read More</a>
+                            <a href="a-day-at-surya-nursing.html" class="btn btn-secondary">Read More</a>
                         </div>
                     </div>
                     <div class="card blog-card reveal" style="transition-delay: 0.2s;">
-                        <img src="assets/images/exam-preparation.webp" alt="A student studying diligently with books and a laptop.">
+                        <img src="assets/images/exam-preparation.webp" alt="A student studying diligently with books and a laptop." loading="lazy" decoding="async">
                         <div class="card-content">
                             <span class="tag">ACADEMIC SUCCESS</span>
                             <h3>How to Prepare for Your Nursing Entrance Exam</h3>
                             <p>This guide moves beyond generic tips to give you an evidence-based framework for effective preparation...</p>
-                            <a href="blog-preparing-for-nursing-exams.html" class="btn btn-secondary">Read More</a>
+                            <a href="preparing-for-nursing-exams.html" class="btn btn-secondary">Read More</a>
                         </div>
                     </div>
                 </div>
@@ -158,26 +230,34 @@
                     <p>Get a feel for our campus and facilities by watching our official campus tour video.</p>
                 </div>
                 <div class="video-container reveal">
-                    <!-- Replace this with your actual YouTube video embed code -->
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/mz4vv" title="Surya Nursing Educational College Campus Tour" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer (Standardized) -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col"><h4>Surya Nursing College</h4><p>A center for excellence in nursing, providing evidence-based quality education in Sahibganj, Jharkhand.</p>
+                <div class="footer-col">
+                    <h4>Surya Nursing College</h4>
+                    <p>A center for excellence in nursing, providing evidence-based quality education in Sahibganj, Jharkhand.</p>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/profile.php?id=61574913328069" target="_blank" rel="noopener noreferrer" aria-label="Visit our Facebook page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
-                        <a href="https://www.instagram.com/suryanursing_college/" target="_blank" rel="noopener noreferrer" aria-label="Visit our Instagram page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6a3.6 3.6 0 0 0-3.6-3.6H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
-                        <a href="https://www.youtube.com/@Suryanursing-mz4vv" target="_blank" rel="noopener noreferrer" aria-label="Visit our YouTube channel"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25 1.09-.83 1.82-1.94 2.07-.47.13-1.33.22-2.65-.28-1.3.07-2.49.1-3.5-.1h-1.84c-1.1.0-2.37-.03-3.7-.1-1.33-.06-2.37-.15-2.83-.28-1.1-.25-1.68-1-1.93-2.07-.28-1.03-.44-2.64-.44-4.83l.01-1.64c.04-1.48.1-2.43.13-2.86.07-.83.15-1.48.28-1.9.28-1.09.86-1.82 1.94-2.07.47-.13 1.33-.22-2.65-.28 1.3-.07-2.49-.1-3.5-.1h1.84c1.1 0 2.37.03 3.7.1 1.33.06 2.37.15 2.83-.28 1.1.25 1.68 1 1.93 2.07z"/></svg></a>
+                        <a href="https://www.facebook.com/profile.php?id=61574913328069" target="_blank" rel="noopener noreferrer" aria-label="Visit our Facebook page">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/suryanursing_college/" target="_blank" rel="noopener noreferrer" aria-label="Visit our Instagram page">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px" aria-hidden="true"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6a3.6 3.6 0 0 0-3.6-3.6H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+                        </a>
+                        <a href="https://www.youtube.com/@Suryanursing-mz4vv" target="_blank" rel="noopener noreferrer" aria-label="Visit our YouTube channel">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px" aria-hidden="true"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25 1.09-.83 1.82-1.94 2.07-.47.13-1.33.22-2.65-.28-1.3.07-2.49.1-3.5-.1h-1.84c-1.1.0-2.37-.03-3.7-.1-1.33-.06-2.37-.15-2.83-.28-1.1-.25-1.68-1-1.93-2.07-.28-1.03-.44-2.64-.44-4.83l.01-1.64c.04-1.48.1-2.43.13-2.86.07-.83.15-1.48.28-1.9.28-1.09.86-1.82 1.94-2.07.47-.13 1.33-.22-2.65-.28 1.3-.07-2.49-.1-3.5-.1h1.84c1.1 0 2.37.03 3.7.1 1.33.06 2.37.15 2.83.28 1.1.25 1.68 1 1.93 2.07z"/></svg>
+                        </a>
                     </div>
                 </div>
-                <div class="footer-col"><h4>Quick Links</h4>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
                     <ul class="footer-links">
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="courses.html">Courses</a></li>
@@ -188,21 +268,29 @@
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-col"><h4>Our Programs</h4>
+                <div class="footer-col">
+                    <h4>Our Programs</h4>
                     <ul class="footer-links">
                         <li><a href="courses.html#anm">ANM</a></li>
                         <li><a href="courses.html#gnm">GNM</a></li>
                         <li><a href="courses.html#bsc">B.Sc Nursing</a></li>
                     </ul>
                 </div>
-                <div class="footer-col"><h4>Contact Us</h4><address>P.O – Sobhanpur Bhatta,<br>Sahibganj, Jharkhand 816109</address><p><a href="mailto:suryanursingeducationalcollege@gmail.com">suryanursingeducationalcollege@gmail.com</a></p><p><a href="tel:+919264197981">+91-9264197981</a></p></div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <address>P.O – Sobhanpur Bhatta,<br>Sahibganj, Jharkhand 816109</address>
+                    <p><a href="mailto:suryanursingeducationalcollege@gmail.com">suryanursingeducationalcollege@gmail.com</a></p>
+                    <p><a href="tel:+919264197981">+91-9264197981</a></p>
+                </div>
             </div>
-            <div class="footer-bottom"><p>© <span id="year">2025</span> Surya Nursing Educational College. All Rights Reserved.</p></div>
+            <div class="footer-bottom">
+                <p>© <span id="year">2025</span> Surya Nursing Educational College. All Rights Reserved.</p>
+            </div>
         </div>
     </footer>
 
-    <!-- Main JS File -->
-    <script src="js/main.js"></script>
+    <!-- JavaScript -->
+    <script src="js/main.js" defer></script>
 
 </body>
 </html>
