@@ -30,9 +30,7 @@
     
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     --nav-height: 80px;
-}
-
-[data-theme="dark"] {
+}[data-theme="dark"] {
     --bg-base: #0b0f19;
     --bg-surface: #111827;
     --text-main: #f8fafc;
@@ -634,6 +632,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     /* Elegantly truncates text after 3 lines */
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -682,6 +681,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     .blog-card.featured .blog-excerpt {
         font-size: var(--step-0);
         -webkit-line-clamp: 4;
+        line-clamp: 4;
     }
 }
 
@@ -930,8 +930,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .article-meta a:hover {
     color: var(--color-primary);
-}
-[data-theme="dark"] .article-meta a {
+}[data-theme="dark"] .article-meta a {
     color: #e2e8f0;
 }
 
@@ -977,8 +976,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .article-meta .meta-author a:hover {
     text-decoration-color: var(--text-muted);
     color: var(--text-main);
-}
-
-[data-theme="dark"] .article-meta .meta-author a:hover {
+}[data-theme="dark"] .article-meta .meta-author a:hover {
     color: #e2e8f0;
 }
