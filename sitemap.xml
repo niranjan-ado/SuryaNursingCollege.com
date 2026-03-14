@@ -7,103 +7,121 @@
 
 <url>
   <loc>https://www.suryanursingcollege.com/</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>weekly</changefreq>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/index.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
+  <loc>https://www.suryanursingcollege.com/admissions</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://www.suryanursingcollege.com/about</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>monthly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/about.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
+  <loc>https://www.suryanursingcollege.com/courses</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>monthly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/courses.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
+  <loc>https://www.suryanursingcollege.com/faculty</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>monthly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/faculty.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
+  <loc>https://www.suryanursingcollege.com/facilities</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>monthly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/blog.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
+  <loc>https://www.suryanursingcollege.com/faq</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>monthly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/contact.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
+  <loc>https://www.suryanursingcollege.com/contact</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
   <priority>0.80</priority>
 </url>
+
 <url>
-  <loc>https://www.suryanursingcollege.com/why-choose-nursing.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.80</priority>
+  <loc>https://www.suryanursingcollege.com/exam-time-table</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.75</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/a-day-at-surya-nursing.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.80</priority>
+  <loc>https://www.suryanursingcollege.com/blog</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.75</priority>
+</url>
+
+<url>
+  <loc>https://www.suryanursingcollege.com/bsc-nursing-syllabus</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/preparing-for-nursing-exams.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.80</priority>
+  <loc>https://www.suryanursingcollege.com/gnm-syllabus</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/faq.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.80</priority>
+  <loc>https://www.suryanursingcollege.com/anm-syllabus</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.70</priority>
+</url>
+
+<url>
+  <loc>https://www.suryanursingcollege.com/blog/why-choose-nursing</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.60</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/admissions.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.80</priority>
+  <loc>https://www.suryanursingcollege.com/blog/a-day-at-surya-nursing</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.60</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/facilities.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.80</priority>
+  <loc>https://www.suryanursingcollege.com/blog/preparing-for-nursing-exams</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.60</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/anm-syllabus.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.64</priority>
+  <loc>https://www.suryanursingcollege.com/blog/5-habits-aspiring-nurses</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.60</priority>
 </url>
 <url>
-  <loc>https://www.suryanursingcollege.com/gnm-syllabus.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.64</priority>
+  <loc>https://www.suryanursingcollege.com/blog/nursing-frontlines</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.60</priority>
 </url>
+
 <url>
-  <loc>https://www.suryanursingcollege.com/bsc-nursing-syllabus.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.suryanursingcollege.com/exam-time-table.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.suryanursingcollege.com/5-habits-aspiring-nurses.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.suryanursingcollege.com/nursing-frontlines.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.suryanursingcollege.com/author-niranjan-ramamurthy.html</loc>
-  <lastmod>2026-03-12T17:45:00+05:30</lastmod>
-  <priority>0.64</priority>
+  <loc>https://www.suryanursingcollege.com/blog/author-niranjan-ramamurthy</loc>
+  <lastmod>2026-03-14T11:00:00+05:30</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.50</priority>
 </url>
 
 </urlset>

@@ -52,7 +52,7 @@
         "@type": "BreadcrumbList",
         "itemListElement":[
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.suryanursingcollege.com/" },
-          { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://www.suryanursingcollege.com/about.html" }
+          { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://www.suryanursingcollege.com/about" }
         ]
       }
     ]
@@ -65,22 +65,22 @@
 
     <header class="header" id="header">
         <div class="container navbar">
-            <a href="index.html" class="logo" aria-label="Surya Nursing College Home">
+            <a href="/" class="logo" aria-label="Surya Nursing College Home">
               <img src="assets/images/logo.png" alt="Surya Nursing Educational College Logo" decoding="async">
             </a>
             <nav aria-label="Main Navigation">
                 <ul class="nav-links" id="nav-links">
                     <li class="dropdown">
-                        <a href="index.html" aria-haspopup="true" aria-expanded="false">Home <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></a>
+                        <a href="/" aria-haspopup="true" aria-expanded="false">Home <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></a>
                     </li>
                     <li class="dropdown">
-                        <a href="about.html" aria-current="page" aria-haspopup="true" aria-expanded="false">About Us <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></a>
+                        <a href="/about" aria-current="page" aria-haspopup="true" aria-expanded="false">About Us <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></a>
                     </li>
                     <li class="dropdown">
-                        <a href="courses.html" aria-haspopup="true" aria-expanded="false">Courses <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></a>
+                        <a href="/courses" aria-haspopup="true" aria-expanded="false">Courses <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></a>
                     </li>
                     <li class="dropdown">
-                        <a href="facilities.html" aria-haspopup="true" aria-expanded="false">Infrastructure <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></a>
+                        <a href="/facilities" aria-haspopup="true" aria-expanded="false">Infrastructure <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></a>
                     </li>
                     <li class="dropdown">
                         <a href="#" aria-haspopup="true" aria-expanded="false">Academics <span class="material-symbols-outlined" aria-hidden="true">expand_more</span></a>
@@ -218,22 +218,27 @@
             <div class="footer-links-group">
                 <h3>Academics</h3>
                 <ul>
-                    <li><a href="courses.html#anm">ANM (Auxiliary Nurse & Midwife)</a></li>
-                    <li><a href="courses.html#gnm">GNM (General Nursing Midwifery)</a></li>
-                    <li><a href="courses.html#bsc">B.Sc Nursing (Basic)</a></li>
+                    <li><a href="/courses#anm">ANM (Auxiliary Nurse & Midwife)</a></li>
+                    <li><a href="/courses#gnm">GNM (General Nursing Midwifery)</a></li>
+                    <li><a href="/courses#bsc">B.Sc Nursing (Basic)</a></li>
                 </ul>
             </div>
             <div class="footer-links-group">
                 <h3>Institution</h3>
                 <ul>
-                    <li><a href="about.html">About College</a></li>
-                    <li><a href="faculty.html">Faculty</a></li>
-                    <li><a href="facilities.html">Infrastructure/Facilities</a></li>
+                    <li><a href="/about">About College</a></li>
+                    <li><a href="/faculty">Faculty</a></li>
+                    <li><a href="/facilities">Infrastructure/Facilities</a></li>
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">
+        
+        <div class="footer-bottom" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;">
             <p>© <span id="year">2026</span> Surya Nursing Educational College. All rights reserved.</p>
+            <div style="display: flex; align-items: center; gap: 0.4rem; font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: var(--text-muted);">
+                <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--color-primary);">update</span>
+                Last Updated: March 14, 2026
+            </div>
         </div>
     </footer>
 
@@ -260,8 +265,4 @@
 
     <script src="js/main.js" defer></script>
 </body>
-    <div style="display: flex; align-items: center; gap: 0.4rem; font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
-        <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--color-primary);">update</span>
-        Last Updated: March 13, 2026
-    </div>
 </html>

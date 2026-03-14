@@ -1,0 +1,111 @@
+{
+  "trailingSlash": "never",
+  "routes": [
+    {
+      "route": "/index.html",
+      "redirect": "/",
+      "statusCode": 301
+    },
+    {
+      "route": "/about.html",
+      "redirect": "/about",
+      "statusCode": 301
+    },
+    {
+      "route": "/courses.html",
+      "redirect": "/courses",
+      "statusCode": 301
+    },
+    {
+      "route": "/facilities.html",
+      "redirect": "/facilities",
+      "statusCode": 301
+    },
+    {
+      "route": "/faculty.html",
+      "redirect": "/faculty",
+      "statusCode": 301
+    },
+    {
+      "route": "/admissions.html",
+      "redirect": "/admissions",
+      "statusCode": 301
+    },
+    {
+      "route": "/faq.html",
+      "redirect": "/faq",
+      "statusCode": 301
+    },
+    {
+      "route": "/contact.html",
+      "redirect": "/contact",
+      "statusCode": 301
+    },
+    {
+      "route": "/blog.html",
+      "redirect": "/blog",
+      "statusCode": 301
+    },
+    {
+      "route": "/anm-syllabus.html",
+      "redirect": "/anm-syllabus",
+      "statusCode": 301
+    },
+    {
+      "route": "/gnm-syllabus.html",
+      "redirect": "/gnm-syllabus",
+      "statusCode": 301
+    },
+    {
+      "route": "/bsc-nursing-syllabus.html",
+      "redirect": "/bsc-nursing-syllabus",
+      "statusCode": 301
+    },
+    {
+      "route": "/exam-time-table.html",
+      "redirect": "/exam-time-table",
+      "statusCode": 301
+    },
+    {
+      "route": "/blog/why-choose-nursing.html",
+      "redirect": "/blog/why-choose-nursing",
+      "statusCode": 301
+    },
+    {
+      "route": "/blog/a-day-at-surya-nursing.html",
+      "redirect": "/blog/a-day-at-surya-nursing",
+      "statusCode": 301
+    },
+    {
+      "route": "/blog/preparing-for-nursing-exams.html",
+      "redirect": "/blog/preparing-for-nursing-exams",
+      "statusCode": 301
+    },
+    {
+      "route": "/blog/5-habits-aspiring-nurses.html",
+      "redirect": "/blog/5-habits-aspiring-nurses",
+      "statusCode": 301
+    },
+    {
+      "route": "/blog/nursing-frontlines.html",
+      "redirect": "/blog/nursing-frontlines",
+      "statusCode": 301
+    },
+    {
+      "route": "/blog/author-niranjan-ramamurthy.html",
+      "redirect": "/blog/author-niranjan-ramamurthy",
+      "statusCode": 301
+    }
+  ],
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/404.html",
+      "statusCode": 404
+    }
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "X-XSS-Protection": "1; mode=block"
+  }
+}
