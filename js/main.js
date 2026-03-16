@@ -1,168 +1,219 @@
-// =========================================
-// Header Scroll Effect (Intersection Observer)
-// =========================================
-const s = document.createElement('div');
-s.style.position = 'absolute';
-s.style.top = '0';
-s.style.width = '100%';
-s.style.height = '1px';
-s.style.pointerEvents = 'none';
-s.style.visibility = 'hidden';
-document.body.prepend(s);
+document.addEventListener('DOMContentLoaded', () => {
+    'use strict';
 
-const h = document.getElementById('header');
-if (h) {
-    const ho = new IntersectionObserver(([e]) => {
-        if (!e.isIntersecting) {
-            h.classList.add('scrolled');
-        } else {
-            h.classList.remove('scrolled');
-        }
-    }, { threshold: 0, rootMargin: '0px' });
-    ho.observe(s);
-}
+    /* =========================================
+       1. High-Performance Header Scroll Effect
+       ========================================= */
+    // We create an invisible 1px watcher element at the very top of the page.
+    // When this element scrolls out of view, we know the user has scrolled down.
+    const scrollWatcher = document.createElement('div');
+    scrollWatcher.style.position = 'absolute';
+    scrollWatcher.style.top = '0';
+    scrollWatcher.style.width = '100%';
+    scrollWatcher.style.height = '1px';
+    scrollWatcher.style.pointerEvents = 'none';
+    scrollWatcher.style.visibility = 'hidden';
+    document.body.prepend(scrollWatcher);
 
-// =========================================
-// Scroll Reveal Animations
-// =========================================
-const ro = new IntersectionObserver((es, o) => {
-    es.forEach(e => {
-        if (e.isIntersecting) {
-            e.target.classList.add('active');
-            o.unobserve(e.target);
-        }
-    });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
-
-// =========================================
-// Dynamic Copyright Year
-// =========================================
-const y = document.getElementById('year');
-if (y) y.textContent = new Date().getFullYear();
-
-// =========================================
-// Mobile Menu Toggle
-// =========================================
-const mt = document.getElementById('menu-toggle');
-const nl = document.getElementById('nav-links');
-const im = document.querySelector('.icon-menu');
-const ic = document.querySelector('.icon-close');
-
-if (mt && nl) {
-    mt.addEventListener('click', () => {
-        const a = nl.classList.toggle('active');
-        mt.setAttribute('aria-expanded', a);
+    const header = document.getElementById('header');
+    if (header) {
+        const headerObserver = new IntersectionObserver(([entry]) => {
+            if (!entry.isIntersecting) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }, { threshold: 0, rootMargin: '0px' });
         
-        // Added safety checks here in case icons are missing on certain pages
-        if (im) im.style.display = a ? 'none' : 'block';
-        if (ic) ic.style.display = a ? 'block' : 'none';
-        
-        document.body.style.overflow = a ? 'hidden' : '';
-    });
-}
-
-// =========================================
-// Mobile Dropdown Handling
-// =========================================
-document.querySelectorAll('.dropdown > a').forEach(d => {
-    d.addEventListener('click', e => {
-        if (window.innerWidth <= 768) {
-            const p = d.parentElement;
-            
-            // If the menu is NOT active yet, prevent navigation and open it
-            if (!p.classList.contains('active')) {
-                e.preventDefault(); 
-                p.classList.add('active');
-                const m = p.querySelector('.dropdown-menu');
-                if (m) m.style.display = 'flex';
-            } 
-            // If it IS active, we let the click happen normally so they can navigate
-        }
-    });
-});
-
-// =========================================
-// Dark/Light Theme Toggle
-// =========================================
-const tt = document.getElementById('theme-toggle');
-const dI = document.querySelector('.dark-icon');
-const lI = document.querySelector('.light-icon');
-const de = document.documentElement;
-
-const st = () => localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-const at = (t) => {
-    de.setAttribute('data-theme', t);
-    localStorage.setItem('theme', t);
-    if (t === 'dark') {
-        if (dI) dI.style.display = 'none';
-        if (lI) lI.style.display = 'block';
-    } else {
-        if (dI) dI.style.display = 'block';
-        if (lI) lI.style.display = 'none';
+        headerObserver.observe(scrollWatcher);
     }
-};
 
-at(st());
+    /* =========================================
+       2. Scroll Reveal Animations
+       ========================================= */
+    const revealElements = document.querySelectorAll('.reveal');
+    if (revealElements.length > 0) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once for better performance
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-if (tt) {
-    tt.addEventListener('click', () => {
-        at(de.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    });
-}
+        revealElements.forEach(el => revealObserver.observe(el));
+    }
 
-// =========================================
-// Modal Outside Click Close
-// =========================================
-const m = document.getElementById('inquiry-modal');
-if (m) {
-    m.addEventListener('click', e => {
-        const r = m.getBoundingClientRect();
-        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
-            m.close();
-        }
-    });
-}
+    /* =========================================
+       3. Dynamic Copyright Year
+       ========================================= */
+    const yearElement = document.getElementById('year');
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
 
-// =========================================
-// FAQ Accordion Toggle
-// =========================================
-const faqQuestions = document.querySelectorAll('.faq-question');
+    /* =========================================
+       4. Mobile Navigation Toggle
+       ========================================= */
+    const menuToggleBtn = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    const iconMenu = document.querySelector('.icon-menu');
+    const iconClose = document.querySelector('.icon-close');
 
-faqQuestions.forEach(question => {
-    question.addEventListener('click', () => {
-        const isExpanded = question.getAttribute('aria-expanded') === 'true';
-        question.setAttribute('aria-expanded', !isExpanded);
-        
-        // Also toggle an 'active' class on the parent item for easier CSS targeting if needed
-        question.parentElement.classList.toggle('active', !isExpanded);
-    });
-});
+    if (menuToggleBtn && navLinks) {
+        menuToggleBtn.addEventListener('click', () => {
+            const isActive = navLinks.classList.toggle('active');
+            menuToggleBtn.setAttribute('aria-expanded', isActive);
+            
+            if (iconMenu) iconMenu.style.display = isActive ? 'none' : 'block';
+            if (iconClose) iconClose.style.display = isActive ? 'block' : 'none';
+            
+            // Prevent background scrolling when mobile menu is open
+            document.body.style.overflow = isActive ? 'hidden' : '';
+        });
+    }
 
-// =========================================
-// High-Performance Tab System
-// =========================================
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabContents = document.querySelectorAll('.tab-content');
+    /* =========================================
+       5. Mobile Dropdown Handling
+       ========================================= */
+    const dropdownLinks = document.querySelectorAll('.dropdown > a');
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // Only apply this logic on mobile/tablet views
+            if (window.innerWidth <= 768) {
+                const parentLi = link.parentElement;
+                
+                // If the menu is NOT active yet, prevent navigation and open the dropdown
+                if (!parentLi.classList.contains('active')) {
+                    e.preventDefault(); 
+                    
+                    // Close other open dropdowns (optional accordion-style behavior)
+                    document.querySelectorAll('.dropdown.active').forEach(activeDropdown => {
+                        if (activeDropdown !== parentLi) {
+                            activeDropdown.classList.remove('active');
+                            activeDropdown.querySelector('a').setAttribute('aria-expanded', 'false');
+                        }
+                    });
 
-if (tabButtons.length > 0 && tabContents.length > 0) {
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove active classes from all buttons and contents
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-
-            // Add active class to clicked button
-            button.classList.add('active');
-
-            // Find and show corresponding content
-            const targetId = button.getAttribute('data-tab');
-            const targetContent = document.getElementById(targetId);
-            if (targetContent) {
-                targetContent.classList.add('active');
+                    parentLi.classList.add('active');
+                    link.setAttribute('aria-expanded', 'true');
+                    
+                    const dropdownMenu = parentLi.querySelector('.dropdown-menu');
+                    if (dropdownMenu) dropdownMenu.style.display = 'flex';
+                } 
+                // If it IS active, the second tap will follow the link naturally
             }
         });
     });
-}
+
+    /* =========================================
+       6. Dark/Light Theme Toggle
+       ========================================= */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const darkIcon = document.querySelector('.dark-icon');
+    const lightIcon = document.querySelector('.light-icon');
+    const htmlElement = document.documentElement;
+
+    // Get current theme from localStorage or system preference
+    const getPreferredTheme = () => {
+        return localStorage.getItem('theme') || 
+               (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    };
+
+    // Apply the theme and update icons
+    const applyTheme = (theme) => {
+        htmlElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        
+        if (theme === 'dark') {
+            if (darkIcon) darkIcon.style.display = 'none';
+            if (lightIcon) lightIcon.style.display = 'block';
+        } else {
+            if (darkIcon) darkIcon.style.display = 'block';
+            if (lightIcon) lightIcon.style.display = 'none';
+        }
+    };
+
+    // Initialize theme on load
+    applyTheme(getPreferredTheme());
+
+    // Listen for toggle clicks
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+    }
+
+    /* =========================================
+       7. Native Modal Handling (Backdrop Click)
+       ========================================= */
+    const inquiryModal = document.getElementById('inquiry-modal');
+    if (inquiryModal) {
+        // Close modal when clicking outside the dialog box (on the ::backdrop)
+        inquiryModal.addEventListener('click', (e) => {
+            const dialogDimensions = inquiryModal.getBoundingClientRect();
+            if (
+                e.clientX < dialogDimensions.left || 
+                e.clientX > dialogDimensions.right || 
+                e.clientY < dialogDimensions.top || 
+                e.clientY > dialogDimensions.bottom
+            ) {
+                inquiryModal.close();
+            }
+        });
+    }
+
+    /* =========================================
+       8. FAQ Accordion Toggle
+       ========================================= */
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    if (faqQuestions.length > 0) {
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const isExpanded = question.getAttribute('aria-expanded') === 'true';
+                
+                // Close all other FAQs (optional, remove if you want multiple open at once)
+                faqQuestions.forEach(q => {
+                    q.setAttribute('aria-expanded', 'false');
+                    q.parentElement.classList.remove('active');
+                });
+
+                // Toggle the clicked one
+                if (!isExpanded) {
+                    question.setAttribute('aria-expanded', 'true');
+                    question.parentElement.classList.add('active');
+                }
+            });
+        });
+    }
+
+    /* =========================================
+       9. High-Performance Tab System
+       ========================================= */
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    if (tabButtons.length > 0 && tabContents.length > 0) {
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active classes from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                // Find and show corresponding content
+                const targetId = button.getAttribute('data-tab');
+                if (targetId) {
+                    const targetContent = document.getElementById(targetId);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                }
+            });
+        });
+    }
+});

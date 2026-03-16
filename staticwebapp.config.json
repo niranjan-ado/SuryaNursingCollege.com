@@ -1,6 +1,6 @@
 {
   "trailingSlash": "never",
-  "routes": [
+  "routes":[
     {
       "route": "/index.html",
       "redirect": "/",
@@ -97,10 +97,6 @@
       "statusCode": 301
     }
   ],
-  "navigationFallback": {
-    "rewrite": "/index.html",
-    "exclude": ["/assets/*.{png,jpg,jpeg,gif,webp,svg,js,css,woff,woff2}", "/css/*", "/js/*"]
-  },
   "responseOverrides": {
     "404": {
       "rewrite": "/404.html",
