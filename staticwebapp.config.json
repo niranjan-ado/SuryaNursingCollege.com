@@ -126,7 +126,7 @@
     },
     {
       "route": "/README.md",
-      "statusCode": 404,
+      "statusCode": 404
       "rewrite": "/404.html"
     }
   ],
