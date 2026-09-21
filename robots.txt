@@ -1,9 +1,5 @@
 User-agent: *
 Allow: /
-
-# Prevent search engines from indexing the error page
 Disallow: /404
-Disallow: /404.html
 
-# Point to the XML sitemap
 Sitemap: https://www.suryanursingcollege.com/sitemap.xml
